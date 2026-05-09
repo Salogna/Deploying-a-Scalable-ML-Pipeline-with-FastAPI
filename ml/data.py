@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X, categorical_features=None, label=None, training=True, encoder=None, lb=None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -43,6 +43,14 @@ def process_data(
         Trained LabelBinarizer if training is True, otherwise returns the binarizer
         passed in.
     """
+    if categorical_features is None:
+        categorical_features = []
+
+    X = X.copy()
+
+    # Clean whitespace
+    for col in X.select_dtypes(include=["object"]).columns:
+        X[col] = X[col].str.strip()
 
     if label is not None:
         y = X[label]
@@ -51,7 +59,7 @@ def process_data(
         y = np.array([])
 
     X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    X_continuous = X.drop(columns=[categorical_features], axis=1)
 
     if training is True:
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
@@ -68,6 +76,7 @@ def process_data(
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb
+
 
 def apply_label(inference):
     """ Convert the binary label in a single inference sample into string output."""
