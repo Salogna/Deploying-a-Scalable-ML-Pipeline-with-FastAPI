@@ -59,7 +59,7 @@ def process_data(
         y = np.array([])
 
     X_categorical = X[categorical_features].values
-    X_continuous = X.drop(columns=[categorical_features], axis=1)
+    X_continuous = X.drop(columns=categorical_features)
 
     if training is True:
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
