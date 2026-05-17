@@ -1,28 +1,68 @@
 import pytest
-# TODO: add necessary import
+import pandas as pd
+import numpy as np
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
+from sklearn.ensemble import RandomForestClassifier
+
+from ml.data import process_data
+from ml.model import train_model, compute_model_metrics
+
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
+
+def test_process_data():
     """
-    # add description for the first test
+    # Test that process_data works
     """
-    # Your code here
-    pass
+    data = pd.read_csv("data/census.csv")
+
+    X, y, encoder, lb = process_data(
+        data,
+        categorical_features=cat_features,
+        label="salary",
+        training=True,
+    )
+    assert X.shape[0] > 0
+    assert len(y) > 0
 
 
-# TODO: implement the second test. Change the function name and input as needed
-def test_two():
+def test_train_model():
     """
-    # add description for the second test
+    # Test that train_model works
     """
-    # Your code here
-    pass
+    data = pd.read_csv("data/census.csv")
+    select_data = data.head(100)
+
+    X, y, encoder, lb = process_data(
+        select_data,
+        categorical_features=cat_features,
+        label="salary",
+        training=True,
+    )
+    
+    model = train_model(X, y)
+
+    assert isinstance(model, RandomForestClassifier)
 
 
-# TODO: implement the third test. Change the function name and input as needed
-def test_three():
+def test_compute_model_metrics():
     """
-    # add description for the third test
+    # Test that model scores are calculated
     """
-    # Your code here
-    pass
+    y = np.array([1, 0 ,1 ,1])
+    preds = np.array([1, 0, 0, 1])
+
+    precision, recall, fbeta = compute_model_metrics(y, preds)
+
+    assert precision >= 0
+    assert recall >= 0
+    assert fbeta >= 0
+
