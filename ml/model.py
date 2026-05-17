@@ -67,7 +67,7 @@ def inference(model, X):
     """
     preds = model.predict(X)
     return preds
-    
+
 
 def save_model(model, path):
     """ Serializes model to a file.
@@ -81,6 +81,7 @@ def save_model(model, path):
     """
     with open(path, "wb") as file:
         pickle.dump(model, file)
+
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
@@ -136,6 +137,6 @@ def performance_on_categorical_slice(
         lb=lb,
     )
 
-    preds = inference(model, X_slice) # your code here to get prediction on X_slice using the inference function
+    preds = inference(model, X_slice)
     precision, recall, fbeta = compute_model_metrics(y_slice, preds)
     return precision, recall, fbeta

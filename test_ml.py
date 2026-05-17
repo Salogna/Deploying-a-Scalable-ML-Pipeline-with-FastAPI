@@ -17,10 +17,8 @@ cat_features = [
     "native-country",
 ]
 
+
 def test_process_data():
-    """
-    # Test that process_data works
-    """
     data = pd.read_csv("data/census.csv")
 
     X, y, encoder, lb = process_data(
@@ -34,9 +32,6 @@ def test_process_data():
 
 
 def test_train_model():
-    """
-    # Test that train_model works
-    """
     data = pd.read_csv("data/census.csv")
     select_data = data.head(100)
 
@@ -46,16 +41,13 @@ def test_train_model():
         label="salary",
         training=True,
     )
-    
+
     model = train_model(X, y)
 
     assert isinstance(model, RandomForestClassifier)
 
 
 def test_compute_model_metrics():
-    """
-    # Test that model scores are calculated
-    """
     y = np.array([1, 0, 1, 1])
     preds = np.array([1, 0, 0, 1])
 
@@ -64,4 +56,3 @@ def test_compute_model_metrics():
     assert precision >= 0
     assert recall >= 0
     assert fbeta >= 0
-

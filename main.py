@@ -35,14 +35,13 @@ model = load_model(path)
 
 app = FastAPI()
 
-# TODO: create a GET on the root giving a welcome message
+
 @app.get("/")
 async def get_root():
     """ Say hello!"""
     return {"message": "Hello from the API!"}
 
 
-# TODO: create a POST on a different path that does model inference
 @app.post("/data/")
 async def post_inference(data: Data):
     # DO NOT MODIFY: turn the Pydantic model into a dict.
