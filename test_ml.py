@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 import numpy as np
 
@@ -57,7 +56,7 @@ def test_compute_model_metrics():
     """
     # Test that model scores are calculated
     """
-    y = np.array([1, 0 ,1 ,1])
+    y = np.array([1, 0, 1, 1])
     preds = np.array([1, 0, 0, 1])
 
     precision, recall, fbeta = compute_model_metrics(y, preds)
