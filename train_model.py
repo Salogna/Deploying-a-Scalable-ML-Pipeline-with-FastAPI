@@ -64,7 +64,7 @@ encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 
 # load the model
-model = load_model(model_path) 
+model = load_model(model_path)
 
 # TODO: use the inference function to run the model inferences on the test dataset.
 preds = inference(model, X_test)
@@ -83,7 +83,7 @@ for col in cat_features:
     # iterate through the unique values in one categorical feature
     for slice_value in sorted(test[col].unique()):
         count = test[test[col] == slice_value].shape[0]
-        
+
         p, r, fb = performance_on_categorical_slice(
             test,
             col,
